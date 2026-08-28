@@ -9,6 +9,7 @@ test("orangehrm login test", async ({page})=>{
 
     await firstname1.waitFor();
     await firstname1.press('Enter');
+    console.log("Updated Arvind");
 
    
 })
