@@ -4,7 +4,13 @@ pipeline {
     environment {
         CI = 'true'
     }
-
+    parameters {
+        choice(
+            name: 'TEST_TAG',
+            choices: ['@smoke', '@regression'],
+            description: 'Select test tag'
+        )
+    }
     stages {
 
         stage('Checkout') {
@@ -28,7 +34,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat 'npx playwright test'
+                bat "npx playwright test --grep \"${TEST_TAG}\""
             }
         }
     }
