@@ -3,16 +3,24 @@ pipeline {
 
     environment {
         CI = 'true'
+        ENVIRONMENT = "${params.ENVIRONMENT}"
+        TEST_TAG = "${params.TEST_TAG}"
     }
+
     parameters {
         choice(
             name: 'TEST_TAG',
             choices: ['@smoke', '@regression'],
             description: 'Select test tag'
         )
+        choice(
+            name: 'ENVIRONMENT',
+            choices: ['qa', 'staging', 'production'],
+            description: 'Select environment'
+        )
     }
-    stages {
 
+    stages {
         stage('Checkout') {
             steps {
                 git branch: 'main',
@@ -34,7 +42,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat "npx playwright test --grep \"${TEST_TAG}\""
+                bat "set ENVIRONMENT=%ENVIRONMENT% && npx playwright test --grep \"%TEST_TAG%\""
             }
         }
     }

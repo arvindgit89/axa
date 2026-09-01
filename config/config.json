@@ -1,3 +1,9 @@
 {
-    "baseUrl": "https://opensource-demo.orangehrmlive.com/"
+    "baseUrl": "https://opensource-demo.orangehrmlive.com/",
+    "defaultEnvironment": "qa",
+    "environments": {
+        "qa": "https://opensource-demo.orangehrmlive.com/",
+        "staging": "https://opensource-demo.orangehrmlive.com/",
+        "production": "https://opensource-demo.orangehrmlive.com/"
+    }
 }
