@@ -18,8 +18,15 @@ pipeline {
             choices: ['qa', 'staging', 'production'],
             description: 'Select environment'
         )
+        choice(
+            name: 'WORKERS',
+            choices: ['1', '2', '4'],
+            description: 'Number of parallel workers'
+        )
     }
-
+    triggers {
+        cron('H 2 * * *')
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -42,7 +49,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat "set ENVIRONMENT=%ENVIRONMENT% && npx playwright test --grep \"%TEST_TAG%\""
+              bat "set ENVIRONMENT=%ENVIRONMENT% && npx playwright test --grep \"%TEST_TAG%\" --workers=%WORKERS%"
             }
         }
     }
